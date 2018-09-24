@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">Banners
+            <small *ngIf="!edithidden && key==0"> / New Banner</small>
+            <small *ngIf="key>0"> / Update Banner</small>
+        </h3>
+        <div align="right"></div>
+    </div>
+    <!-- /.col-lg-12 -->
+    <ng2-toasty [position]="'top-right'"></ng2-toasty>
+
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+            <div align="right" class="panel-heading">
+                <button class="btn btn-primary btn-md" *ngIf="!addhidden" (click)="add()">
+                    <i class="fa fa-user-plus"></i> Add</button>
+                <button class="btn btn-success " value="" *ngIf="!edithidden" [disabled]="!userform.valid" (click)="submit()">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i> Submit
+                </button>
+                <button class="btn btn-warning " value="" (click)="back()" *ngIf="!edithidden">
+                    <i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back
+                </button>
+                <button type="reset" class="btn btn-info" value="" (click)="reset()" *ngIf="key==0">
+                    <i class="fa fa-repeat" aria-hidden="true"></i> Reset
+                </button>
+            </div>
+
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <table width="100%" class="table table-striped table-bordered table-hover" id="userTable" *ngIf="!addhidden">
+                    <thead>
+                        <tr>
+                            <th>Banner Name</th>
+                            <th>Banner Desc</th>
+                            <th>Banner Position</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let banner of result">
+                            <td class="center">{{banner.BANNER_NAME}}</td>
+                            <td class="center">{{banner.BANNER_DESCRIPTION}}</td>
+                            <td class="center">{{banner.BANNER_POSITION}}</td>
+                            <td class="center">{{banner.BANNER_START_DATE | date:'dd-MM-yyyy'}}</td>
+                            <td class="center">{{banner.BANNER_END_DATE | date:'dd-MM-yyyy'}}</td>
+                            <td class="center">
+                                <ui-switch size="small" [checked]="banner.BANNER_STATUS==1 ? true:false" (change)="switchChange($event,banner.BANNER_ID)"></ui-switch>
+                                <button class="btn btn-info btn-xs" (click)="edit(banner.BANNER_ID)">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <form role="form" [formGroup]="userform" *ngIf="!edithidden">
+                    <input type="hidden" class="form-control" formControlName="CreatedBy" id="CreatedBy" name="CreatedBy">
+                    <input type="hidden" class="form-control" formControlName="LastUpdatedBy" id="LastUpdatedBy" name="LastUpdatedBy">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group required" [ngClass]="isBannerName ?'has-success has-feedback':''">
+                                <label>Banner Name </label>
+                                <input type="text" class="form-control" [ngClass]="isBannerName ?'valid':'invalid'" minlength="3" maxlength="20" formControlName="BannerName"
+                                    id="BannerName" name="BannerName">
+                                <span [ngClass]="isBannerName ?'glyphicon glyphicon-ok form-control-feedback':''"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required" [ngClass]="isBannerDescription ?'has-success has-feedback':''">
+                                <label>Banner Description </label>
+                                <input type="text" class="form-control" [ngClass]="isBannerDescription ?'valid':'invalid'" minlength="3" maxlength="20" formControlName="BannerDescription"
+                                    id="BannerDescription" name="BannerDescription">
+                                <span [ngClass]="isBannerDescription ?'glyphicon glyphicon-ok form-control-feedback':''"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required" [ngClass]="isBannerPosition ?'has-success has-feedback':''">
+                                <label>Banner Position </label>
+                                <select class="form-control"  [ngClass]="isBannerPosition ?'valid':'invalid'" #BannerPosition formControlName="BannerPosition" id="BannerPosition"
+                                    name="BannerPosition">
+                                    <option value="null" disabled selected="selected">Select Position</option>
+                                    <option value="Top" >Top</option>
+                                    <option value="Left">Left</option>
+                                    <option value="Right">Right</option>
+                                    <option value="Bottom">Bottom</option>
+                                </select>
+                                <span [ngClass]="isBannerPosition ?'glyphicon glyphicon-ok form-control-feedback':''"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group required" [ngClass]="isStartDate ?'has-success has-feedback':''">
+                                <label>Start Date </label>
+                                <my-date-picker [ngClass]="isStartDate ?'valid':'invalid'" class="form-control" name="StartDate" [options]="myDatePickerOptions"
+                                    formControlName="StartDate"></my-date-picker>
+                                <span [ngClass]="isStartDate ?'glyphicon glyphicon-ok form-control-feedback':''"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required" [ngClass]="isEndDate ?'has-success has-feedback':''">
+                                <label>End Date </label>
+                                <my-date-picker [ngClass]="isEndDate ?'valid':'invalid'" class="form-control" name="EndDate" [options]="myDatePickerOptions"
+                                    formControlName="EndDate"></my-date-picker>
+                                <span [ngClass]="isEndDate ?'glyphicon glyphicon-ok form-control-feedback':''"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group required" [ngClass]="isFile ?'has-success has-feedback':''">
+                                <label>Banner File </label>
+                                <!-- <input type="file" (change)="onFileChange($event)" name="file" multiple> -->
+                                <input type="file" (change)="onFileChange($event)" class="form-control" #File [ngClass]="isFile ?'valid':'invalid'" formControlName="File"
+                                    id="File" name="File">
+                                <span [ngClass]="isFile ?'glyphicon glyphicon-ok form-control-feedback':''"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group ">
+                                <label>Uploaded Banner </label><br>
+                                <img [src]="imgdir"  width="500px" height="200px"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog " data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">User Deactivation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Do you want {{activedeactivevalue}} the user ?.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="activeUser('1')">Yes</button>
+                <button type="button" class="btn" data-dismiss="modal" (click)="activeUser('0')">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- /.row -->
