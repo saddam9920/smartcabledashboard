@@ -53,7 +53,7 @@ export class UserService {
 
   updateBannerById(id:any,json:any){
     var params = json;    
-    return this.httpClient.post(this.serverPath + this.dirpath + "updateBanner/"+id,params);    
+    return this.httpClient.post(this.serverPath + "banner/" + "updateBanner/"+id,params);    
   }
 
   uploadFile(json:FormData){
@@ -62,6 +62,11 @@ export class UserService {
 
   getBannerById(id:any){
     return this.httpClient.get(this.serverPath + "banner/" + "getBannerById/"+id);    
+  }
+
+  activeBanner(json:any){
+    var params = json;    
+    return this.httpClient.post(this.serverPath + "banner/" + "activeBanner",params);    
   }
 
 }

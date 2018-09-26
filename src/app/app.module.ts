@@ -13,6 +13,8 @@ import { BannerMasterComponent } from './banner/bannermaster.component';
 import { BannerSearchComponent } from './banner/bannersearch.component';
 import { UserSearchComponent } from './profile/usersearch.component';
 import { UserMasterComponent } from './profile/usermaster.component';
+import { CategorySearchComponent } from './category/categorysearch.component';
+import { SubCategorySearchComponent } from './subcategory/subcategorysearch.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/authinterceptor';
 import { AuthService } from './services/authservice';
@@ -39,7 +41,9 @@ import { FileUploadModule } from 'ng2-file-upload';
     BannerMasterComponent,
     BannerSearchComponent,
     UserSearchComponent,
-    UserMasterComponent
+    UserMasterComponent,
+    CategorySearchComponent,
+    SubCategorySearchComponent
   ],
   imports: [
     BrowserModule,

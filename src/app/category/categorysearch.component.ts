@@ -11,11 +11,11 @@ declare var $: any;
 const URL = 'http://localhost:3000/upload';
 
 @Component({
-    selector: 'banner-search',
-    templateUrl: 'bannersearch.component.html',
+    selector: 'category-search',
+    templateUrl: 'categorysearch.component.html',
     providers: [LocalStorageService]
 })
-export class BannerSearchComponent {
+export class CategorySearchComponent {
     imgdir: any;
     filename: any;
     optionSelected: any;

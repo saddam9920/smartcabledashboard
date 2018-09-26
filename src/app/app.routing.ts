@@ -8,6 +8,8 @@ import { BannerMasterComponent } from './banner/bannermaster.component';
 import { BannerSearchComponent } from './banner/bannersearch.component';
 import { UserSearchComponent } from './profile/usersearch.component';
 import { UserMasterComponent } from './profile/usermaster.component';
+import { CategorySearchComponent } from './category/categorysearch.component';
+import { SubCategorySearchComponent } from './subcategory/subcategorysearch.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +32,24 @@ export const routes: Routes = [
     children: [
       {
         path: '', component: BannerSearchComponent
+      }
+    ]
+  },
+  {
+    path: 'category',
+    component: HomeComponent,
+    children: [
+      {
+        path: '', component: CategorySearchComponent
+      }
+    ]
+  },
+  {
+    path: 'subcategory',
+    component: HomeComponent,
+    children: [
+      {
+        path: '', component: SubCategorySearchComponent
       }
     ]
   },
